@@ -1,0 +1,25 @@
+nav {
+  display: flex;
+  align-items: center;
+
+  width: 100vw;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.nav-link {
+  padding: 1.5vw 4vw;
+  /* border-left: 1px solid black;
+  border-right: 1px solid black; */
+  transition: background-color linear 0.2s;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: #aaa;
+  text-decoration: underline !important;
+}

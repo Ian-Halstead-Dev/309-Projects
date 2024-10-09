@@ -1,0 +1,12 @@
+let select = document.getElementById("endTime");
+
+for (let i = 1; i < 7; i++) {
+  let option = document.createElement("option");
+  option.value = i;
+
+  let newTime = new Date();
+  newTime.setHours(newTime.getHours() + i);
+  option.innerText =
+    newTime.toLocaleTimeString() + ` (${i} hour${i == 1 ? "" : "s"} from now)`;
+  select.appendChild(option);
+}

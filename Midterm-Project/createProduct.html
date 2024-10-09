@@ -15,23 +15,29 @@
         <label for="image-input">Image: </label>
         <input type="text" id="image-input" />
       </div>
-      <div class="image"></div>
+      <img
+        style="display: none"
+        src=""
+        alt="The Added Product"
+        id="image-display"
+      />
       <div class="row">
         <label for="title-input">Title: </label
         ><input type="text" id="title-input" />
       </div>
       <div class="row">
         <label for="description-input">Description: </label
-        ><input type="text" id="" description-input />
+        ><input type="text" id="description-input" />
       </div>
       <div class="row">
         <label for="endTime-input">End Time: </label>
-        <select name="endTime" id="endTime"></select>
+        <select name="endTime-input" id="endTime-input"><option value="null"></option></select>
       </div>
       <p id="error"></p>
-      <button>Create!</button>
+      <button id="create"">Create!</button>
     </div>
 
     <script src="fillTime.js"></script>
+    <script src="createProduct.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-let select = document.getElementById("endTime");
+let select = document.getElementById("endTime-input");
 
 for (let i = 1; i < 7; i++) {
   let option = document.createElement("option");

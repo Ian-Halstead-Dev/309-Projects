@@ -36,6 +36,8 @@ createButton.addEventListener("click", () => {
   );
   if (!hasNullValue) {
     let products = JSON.parse(localStorage.getItem("products"));
+    product.id = products[products.length - 1].id + 1;
+    product.price = 0;
     products.push(product);
     let productsJson = JSON.stringify(products);
     localStorage.setItem("products", productsJson);

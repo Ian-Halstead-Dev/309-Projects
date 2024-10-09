@@ -1,6 +1,6 @@
 let select = document.getElementById("endTime-input");
 
-for (let i = 1; i < 7; i++) {
+for (let i = 1; i < 13; i++) {
   let option = document.createElement("option");
   option.value = i;
 

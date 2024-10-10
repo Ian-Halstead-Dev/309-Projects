@@ -3,3 +3,5 @@ let loadData = async () => {
   let data = await dataBad.json();
   localStorage.setItem("products", JSON.stringify(data));
 };
+
+loadData();

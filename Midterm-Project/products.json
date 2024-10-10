@@ -1,3 +1,83 @@
-{
-  "products": [{"image": "https://unsplash.com/photos/a-laptop-computer-sitting-on-top-of-a-desk-fc1dt-T0JMI"}]
-}
+
+  [
+    {
+      "image": "https://picsum.photos/id/96/200/300",
+      "title": "Laptop",
+      "description": "Apple M1 Laptop. Rarely used, shows no sign of usage. Great for development, content creation, or browsing the web.",
+      "price": 1200,
+      "endTime": "11:43:16 AM",
+      "id": 0
+    },
+    {
+      "image": "https://picsum.photos/id/102/200/300",
+      "title": "Smartphone",
+      "description": "Latest Samsung Galaxy model, 256GB storage. Barely used, no scratches.",
+      "price": 850,
+      "endTime": "02:30:00 PM",
+      "id": 1
+    },
+    {
+      "image": "https://picsum.photos/id/101/200/300",
+      "title": "Bluetooth Speaker",
+      "description": "Portable speaker with excellent sound quality and 10-hour battery life.",
+      "price": 75,
+      "endTime": "01:15:45 PM",
+      "id": 2
+    },
+    {
+      "image": "https://picsum.photos/id/104/200/300",
+      "title": "Gaming Console",
+      "description": "PlayStation 5, 1TB version. Comes with 2 controllers and 3 games.",
+      "price": 550,
+      "endTime": "04:00:00 PM",
+      "id": 3
+    },
+    {
+      "image": "https://picsum.photos/id/106/200/300",
+      "title": "Headphones",
+      "description": "Noise-cancelling over-ear headphones with wireless connectivity.",
+      "price": 200,
+      "endTime": "06:45:30 PM",
+      "id": 4
+    },
+    {
+      "image": "https://picsum.photos/id/108/200/300",
+      "title": "Smartwatch",
+      "description": "Apple Watch Series 7, 44mm, GPS + Cellular, mint condition.",
+      "price": 400,
+      "endTime": "12:30:00 PM",
+      "id": 5
+    },
+    {
+      "image": "https://picsum.photos/id/110/200/300",
+      "title": "Tablet",
+      "description": "iPad Pro 11-inch, 512GB, comes with a Magic Keyboard and Apple Pencil.",
+      "price": 1000,
+      "endTime": "03:00:00 PM",
+      "id": 6
+    },
+    {
+      "image": "https://picsum.photos/id/112/200/300",
+      "title": "Camera",
+      "description": "Canon EOS R6 Mirrorless Camera with 24-105mm lens. Like new condition.",
+      "price": 2500,
+      "endTime": "05:00:00 PM",
+      "id": 7
+    },
+    {
+      "image": "https://picsum.photos/id/114/200/300",
+      "title": "Monitor",
+      "description": "27-inch 4K UHD Monitor, ideal for gaming or professional editing.",
+      "price": 350,
+      "endTime": "07:30:00 PM",
+      "id": 8
+    },
+    {
+      "image": "https://picsum.photos/id/116/200/300",
+      "title": "Wireless Earbuds",
+      "description": "Latest model of AirPods Pro, noise-cancellation, wireless charging case included.",
+      "price": 250,
+      "endTime": "09:00:00 AM",
+      "id": 9
+    }
+  ]

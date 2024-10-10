@@ -35,8 +35,11 @@ createButton.addEventListener("click", () => {
     (value) => value === "" || value === undefined
   );
   if (!hasNullValue) {
-    let products = JSON.parse(localStorage.getItem("products"));
-    product.id = products[products.length - 1].id + 1;
+    products = [];
+
+    // let products = JSON.parse(localStorage.getItem("products"));
+    // product.id = products[products.length - 1].id + 1;
+    product.id = 0;
     product.price = 0;
     products.push(product);
     let productsJson = JSON.stringify(products);

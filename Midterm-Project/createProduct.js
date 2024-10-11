@@ -30,17 +30,14 @@ createButton.addEventListener("click", () => {
     formInputs.endTime.options[formInputs.endTime.selectedIndex];
   let formattedStr = removeAfterSecondSpace(selectedOption.text);
   product.endTime = formattedStr;
-  console.log(product);
   const hasNullValue = Object.values(product).some(
     (value) => value === "" || value === undefined
   );
   if (!hasNullValue) {
-    products = [];
-
-    // let products = JSON.parse(localStorage.getItem("products"));
-    // product.id = products[products.length - 1].id + 1;
-    product.id = 0;
+    let products = getData();
+    product.id = products[products.length - 1].id + 1;
     product.price = 0;
+
     products.push(product);
     let productsJson = JSON.stringify(products);
     localStorage.setItem("products", productsJson);

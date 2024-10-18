@@ -5,4 +5,4 @@ let loadData = async () => {
   console.log(data);
 };
 
-(async () => await loadData())();
+// (async () => await loadData())();

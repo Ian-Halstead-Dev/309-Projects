@@ -3,12 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Highest Bidder</title>
+    <title>Highest Bidder - Homepage</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
-    <a href="createProduct.html">Create</a>
-    <a href="productDetails.html?id=1">Load</a>
-    <a href="login.html">login</a>
-    <a href="loadData.html">reset data</a>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">Highest Bidder</a>
+      <a href="createProduct.html" class="btn btn-primary"
+        >Create New Product</a
+      >
+    </nav>
+
+    <div class="container mt-4">
+      <h1 class="text-center mb-4">Available Products</h1>
+      <div id="products-container" class="row"></div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="displayProducts.js"></script>
   </body>
 </html>

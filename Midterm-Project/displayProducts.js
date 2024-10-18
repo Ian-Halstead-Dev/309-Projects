@@ -5,7 +5,6 @@ function displayProducts() {
     JSON.parse(localStorage.getItem("products")).length == 0
   ) {
     const container = document.getElementById("products-container");
-    console.log(container);
 
     let button = document.createElement("button");
     button.classList = "btn btn-primary btn-lg";

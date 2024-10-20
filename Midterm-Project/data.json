@@ -1,7 +1,7 @@
 
   [
     {
-      "image": "https://picsum.photos/id/96/200/300",
+      "image": "https://picsum.photos/id/0/200/300",
       "title": "Laptop",
       "description": "Apple M1 Laptop. Rarely used, shows no sign of usage. Great for development, content creation, or browsing the web.",
       "price": 1200,
@@ -9,7 +9,7 @@
       "id": 0
     },
     {
-      "image": "https://picsum.photos/id/102/200/300",
+      "image": "https://picsum.photos/id/160/200/300",
       "title": "Smartphone",
       "description": "Latest Samsung Galaxy model, 256GB storage. Barely used, no scratches.",
       "price": 850,
@@ -17,9 +17,9 @@
       "id": 1
     },
     {
-      "image": "https://picsum.photos/id/101/200/300",
-      "title": "Bluetooth Speaker",
-      "description": "Portable speaker with excellent sound quality and 10-hour battery life.",
+      "image": "https://picsum.photos/id/1068/200/300",
+      "title": "Desk",
+      "description": "Comes as is. 12' by 14' and 10' tall. You must pick up.",
       "price": 75,
       "endTime": "01:15:45 PM",
       "id": 2

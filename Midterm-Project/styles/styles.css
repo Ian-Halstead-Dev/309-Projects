@@ -10,3 +10,149 @@
   justify-content: center;
   flex-direction: column;
 }
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation Bar */
+nav {
+  background-color: #333;
+  color: #fff;
+}
+
+.spacing {
+  margin: 10px 1000px;
+}
+/* Header */
+.head {
+  background-color: #0080ff;
+  color: white;
+  padding: 0.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.head h1 {
+  font-size: 2.5rem;
+}
+
+.extra h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* Form Section */
+.create-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.create-content .row {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.create-content label {
+  font-weight: bold;
+  margin-right: 1rem;
+  color: #333;
+}
+
+.create-content input,
+.create-content textarea,
+.create-content select {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.create-content input:focus,
+.create-content textarea:focus,
+.create-content select:focus {
+  border-color: #0080ff;
+  outline: none;
+}
+
+button {
+  padding: 0.75rem 2rem;
+  background-color: #0080ff;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0080ff;
+}
+
+/* Error Message */
+#create-content p#error {
+  color: red;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+/* Image Preview */
+.create-content img {
+  display: block;
+  margin: 1rem 0;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.margin-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+hr {
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.course-info {
+  text-align: center;
+}
+
+.content p {
+  padding: 4px;
+}
+
+h1 {
+  font-size: 175%;
+}
+
+h2 {
+  font-size: 150%;
+}
+
+.card-body h3 {
+  text-decoration: underline;
+  padding-bottom: 10px;
+  font-weight: bold;
+}

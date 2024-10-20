@@ -4,11 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Highest Bidder</title>
+    <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
-    <nav></nav>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">Highest Bidder</a>
+      <div>
+        <a href="index.html" class="btn btn-primary">Home</a>
+        <a href="createProduct.html" class="btn btn-primary"
+          >Create New Product</a
+        >
+        <a href="about.html" class="btn btn-primary">About</a>
+      </div>
+    </nav>
     <div class="head"><h1>Create Product</h1></div>
     <div class="create-content">
       <div class="row">
@@ -34,12 +47,24 @@
         <select name="endTime-input" id="endTime-input"><option value="null"></option></select>
       </div>
       <p id="error"></p>
-      <button id="create"">Create!</button>
+      <button id="create">Create!</button>
     </div>
+    <div class="extra">
+      <h1>Example Products</h1>
+      <div class="container mt-4">
+        <div
+          id="products-container"
+          class="row d-flex justify-content-center"
+        ></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
     <script src="getData.js"></script>
     <script src="timeHelper.js"></script>
     <script src="fillTime.js"></script>
     <script src="createProduct.js"></script>
+    <script src="displayProducts-2.js"></script>
   </body>
 </html>

@@ -4,11 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Highest Bidder</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
-    <nav></nav>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">Highest Bidder</a>
+      <div>
+        <a href="index.html" class="btn btn-primary">Home</a>
+        <a href="createProduct.html" class="btn btn-primary"
+          >Create New Product</a
+        >
+        <a href="about.html" class="btn btn-primary">About</a>
+      </div>
+    </nav>
     <div class="head"><h1>Product Details</h1></div>
 
     <div class="details-content">
@@ -17,6 +30,7 @@
       <p>Description: <span id="description-display"></span></p>
       <p>Current Bid: $<span id="price-display"></span></p>
       <p>End Time: <span id="endTime-display"></span></p>
+      <a href="index.html"><button>Return</button></a>
     </div>
 
     <script src="getData.js"></script>

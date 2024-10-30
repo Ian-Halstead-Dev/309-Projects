@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 function Cart(props) {
-  let [cart, setCart] = props.cartState;
+  const [cart, setCart] = props.cartState;
+  const [menu, setMenu] = props.menuState;
 
-  useEffect(() => {
-    setCart((prevCart) => [...prevCart, 90]);
-  }, []);
   return (
     <div className="Cart">
       <p>Cart</p>

@@ -8,9 +8,7 @@ function BaseComponent(props) {
   let product = props.product;
   let addElementToCart = () => {
     setCart((prevCart) => {
-      // Create a new cart by adding the product id
       const newCart = [...prevCart, product.id];
-      // Sort the new cart
       return newCart.sort((a, b) => a - b);
     });
 
@@ -18,6 +16,12 @@ function BaseComponent(props) {
   };
 
   let removeElementFromCart = () => {
+    // Only decrease inCart if the product was actually removed
+    setInCart((prevInCart) => {
+      const index = cart.indexOf(product.id);
+      return index > -1 ? prevInCart - 1 : prevInCart;
+    });
+
     setCart((prevCart) => {
       const index = prevCart.indexOf(product.id);
       if (index > -1) {
@@ -30,12 +34,6 @@ function BaseComponent(props) {
         return newCart.sort((a, b) => a - b);
       }
       return prevCart; // If the product id wasn't found, return the previous cart
-    });
-
-    // Only decrease inCart if the product was actually removed
-    setInCart((prevInCart) => {
-      const index = cart.indexOf(product.id);
-      return index > -1 ? prevInCart - 1 : prevInCart;
     });
   };
 

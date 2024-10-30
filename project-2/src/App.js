@@ -1,20 +1,38 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Browse from "./Pages/Browse";
 import Cart from "./Pages/Cart";
 import Confirmation from "./Pages/Confirmation";
 
 function App() {
+  const [cart, setCart] = useState([]);
   const [currentPage, setCurrentPage] = useState("browse");
 
   let renderPage = () => {
     if (currentPage.toLowerCase() == "browse") {
-      return <Browse setCurrentPage={setCurrentPage}></Browse>;
+      return (
+        <>
+          <Browse cartState={[cart, setCart]} setCurrentPage={setCurrentPage} />
+          {cart.map((item, i) => (
+            <p key={i}>{item}</p>
+          ))}
+        </>
+      );
     } else if (currentPage.toLowerCase() == "cart") {
-      return <Cart setCurrentPage={setCurrentPage}></Cart>;
+      return (
+        <Cart
+          cartState={[cart, setCart]}
+          setCurrentPage={setCurrentPage}
+        ></Cart>
+      );
     } else if (currentPage.toLowerCase() == "confirmation") {
-      return <Confirmation setCurrentPage={setCurrentPage}></Confirmation>;
+      return (
+        <Confirmation
+          cartState={[cart, setCart]}
+          setCurrentPage={setCurrentPage}
+        ></Confirmation>
+      );
     }
   };
 

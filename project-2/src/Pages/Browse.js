@@ -4,11 +4,11 @@ import BrowseCard from "../Components/BrowseCard";
 
 function Browse(props) {
   const [menu, setMenu] = useState([]);
+  const [cart, setCart] = props.cartState;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Simulate an API call
         const response = await fetch("products.json");
         const result = await response.json();
         setMenu(result.menu);
@@ -27,8 +27,12 @@ function Browse(props) {
         Confirmation
       </button>
       <button onClick={() => props.setCurrentPage("Cart")}>Cart</button>
-      {menu.map((product, index) => (
-        <BrowseCard key={index} product={product} />
+      {menu.map((product) => (
+        <BrowseCard
+          cartState={props.cartState}
+          key={product.id}
+          product={product}
+        />
       ))}
     </div>
   );

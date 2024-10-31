@@ -16,13 +16,20 @@ function App() {
         const response = await fetch("products.json");
         const result = await response.json();
         setMenu(result.menu);
+
+        let cartArr = Array(result.menu.length).fill(0);
+        setCart(cartArr);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data: ", error);
       }
     };
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
 
   let renderPage = () => {
     if (currentPage.toLowerCase() == "browse") {

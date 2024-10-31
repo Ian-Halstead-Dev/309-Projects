@@ -6,8 +6,9 @@ function Browse(props) {
   const [menu, setMenu] = props.menuState;
 
   const [displayedMenu, setDisplayedMenu] = useState(menu);
+  const [totalPrice, setTotalPrice] = props.totalPriceState;
 
-  const [cart, setCart] = props.cartState;
+  // const [cart, setCart] = props.cartState;
 
   useEffect(() => {
     setDisplayedMenu(menu);
@@ -37,6 +38,7 @@ function Browse(props) {
           cartState={props.cartState}
           key={product.id}
           product={product}
+          totalPriceState={[totalPrice, setTotalPrice]}
         />
       ))}
     </div>

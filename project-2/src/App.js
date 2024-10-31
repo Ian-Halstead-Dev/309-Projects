@@ -10,6 +10,29 @@ function App() {
   const [cart, setCart] = useState([]);
   const [currentPage, setCurrentPage] = useState("browse");
 
+  let userDataObj = {
+    name: "",
+    email: "",
+    card: "",
+    address: "",
+    address2: "",
+    city: "",
+    state: "",
+    zip: "",
+  };
+
+  const [userData, setUserData] = useState(userDataObj);
+
+  const [displayedUserData, setDisplayedUserData] = useState();
+
+  useEffect(() => {
+    let displayedUserDataJson = userData;
+    displayedUserDataJson.card = "X".repeat(12) + userData.card.slice(12);
+    setDisplayedUserData(displayedUserDataJson);
+  }, [userData]);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,10 +62,8 @@ function App() {
             cartState={[cart, setCart]}
             setCurrentPage={setCurrentPage}
             menuState={[menu, setMenu]}
+            totalPriceState={[totalPrice, setTotalPrice]}
           />
-          {cart.map((item, i) => (
-            <p key={i}>{item}</p>
-          ))}
         </>
       );
     } else if (currentPage.toLowerCase() == "cart") {
@@ -51,6 +72,7 @@ function App() {
           cartState={[cart, setCart]}
           menuState={[menu, setMenu]}
           setCurrentPage={setCurrentPage}
+          totalPriceState={[totalPrice, setTotalPrice]}
         ></Cart>
       );
     } else if (currentPage.toLowerCase() == "confirmation") {
@@ -58,6 +80,7 @@ function App() {
         <Confirmation
           cartState={[cart, setCart]}
           setCurrentPage={setCurrentPage}
+          totalPriceState={[totalPrice, setTotalPrice]}
         ></Confirmation>
       );
     }

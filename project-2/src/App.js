@@ -81,6 +81,8 @@ function App() {
           cartState={[cart, setCart]}
           setCurrentPage={setCurrentPage}
           totalPriceState={[totalPrice, setTotalPrice]}
+          cartState={[cart, setCart]}
+          menuState={[menu, setMenu]}
         ></Confirmation>
       );
     }

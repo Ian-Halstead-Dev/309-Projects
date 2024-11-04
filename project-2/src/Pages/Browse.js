@@ -27,14 +27,22 @@ function Browse(props) {
   return (
     <div className="Browse container py-4">
       <div className="mb-3">
-        <input type="text" className="form-control" placeholder="Search..." onInput={searchInput}></input>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search..."
+          onInput={searchInput}
+        ></input>
       </div>
       <p className="h4 mb-4">Browse</p>
       <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div className="container-fluid">
-          <button className="btn btn-primary me-2" onClick={() => props.setCurrentPage("Browse")}>Browse</button>
-          <button className="btn btn-secondary me-2" onClick={() => props.setCurrentPage("Cart")}>Cart</button>
-          <button className="btn btn-success" onClick={() => props.setCurrentPage("Confirmation")}>Confirmation</button>
+          <button
+            className="btn btn-secondary me-2"
+            onClick={() => props.setCurrentPage("Cart")}
+          >
+            Cart
+          </button>
         </div>
       </nav>
       <div className="row">

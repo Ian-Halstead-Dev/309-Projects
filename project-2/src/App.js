@@ -73,6 +73,7 @@ function App() {
           menuState={[menu, setMenu]}
           setCurrentPage={setCurrentPage}
           totalPriceState={[totalPrice, setTotalPrice]}
+          userDataState={[userData, setUserData]}
         ></Cart>
       );
     } else if (currentPage.toLowerCase() == "confirmation") {

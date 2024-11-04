@@ -18,6 +18,8 @@ function Cart(props) {
 
   const [totalPrice, setTotalPrice] = props.totalPriceState;
 
+  const [userData, setUserData] = props.userDataState;
+
   const submitForm = (e) => {
     e.preventDefault();
 
@@ -39,6 +41,23 @@ function Cart(props) {
       setErrorText("All data is required except for Address 2");
       return;
     }
+
+    let userObj = userData;
+
+    userObj.name = name;
+    userObj.address = address;
+    userObj.city = city;
+    userObj.card = card;
+    userObj.zip = zip;
+    userObj.email = email;
+    userObj.address = address;
+    userObj.address2 = address2;
+    userObj.state = state;
+
+    setUserData(userObj);
+
+    setCart(Array(menu.length).fill(0));
+    props.setCurrentPage("confirmation");
   };
 
   const displayCart = () => {

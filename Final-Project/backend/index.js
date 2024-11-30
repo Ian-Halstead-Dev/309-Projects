@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const mysql = require("mysql2/promise");
 const crypto = require("crypto");
+const userRouter = require("./routers/userRouter");
 
 require("dotenv").config();
 
@@ -13,12 +14,6 @@ require("dotenv").config();
 const port = "8081";
 const host = "localhost";
 // MySQL Database Connection
-const db = mysql.createPool({
-  host: "127.0.0.1",
-  user: "root",
-  password: process.env.DB_PASSWORD, //change this based on your MYSQL data
-  database: "secoms3190",
-});
 
 // // Connect to Database
 // db.connect((err) => {
@@ -62,18 +57,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads")); // Serve static files
-
-let authMiddleware = async (req, res, next) => {
-  let query = "SELECT * FROM users WHERE token = ?";
-  let param = [req.body.token];
-  let [user] = await db.query(query, param);
-
-  if (user.length == 0) {
-    return res.status(404).send("User not found");
-  }
-  req.user = user[0];
-  next();
-};
+app.use("/users", userRouter);
 
 // Start Server
 app.listen(port, () => {
@@ -83,55 +67,63 @@ app.listen(port, () => {
 // API Routes
 
 // Create User
-app.post("/users", async (req, res) => {
-  let findUserQuery = "SELECT * FROM users WHERE users.email = ?";
-  let email = [req.body.email];
+// app.post("/users", async (req, res) => {
+//   let findUserQuery = "SELECT * FROM users WHERE users.email = ?";
+//   let email = [req.body.email];
 
-  let [users] = await db.query(findUserQuery, email);
-  if (users.length != 0) {
-    return res.status(409).json({ error: "User with email already exists" });
-  }
+//   let [users] = await db.query(findUserQuery, email);
+//   if (users.length != 0) {
+//     return res.status(409).json({ error: "User with email already exists" });
+//   }
 
-  let salt = crypto.randomBytes(16).toString("hex");
-  let hash = crypto
-    .pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`)
-    .toString(`hex`);
+//   let salt = crypto.randomBytes(16).toString("hex");
+//   let hash = crypto
+//     .pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`)
+//     .toString(`hex`);
 
-  let insertQuery =
-    "INSERT INTO users (email, password, salt) VALUES (?, ?, ?)";
-  let values = [req.body.email, hash, salt];
-  await db.query(insertQuery, values);
-  return res.status(200).json({});
-});
+//   let insertQuery =
+//     "INSERT INTO users (email, password, salt) VALUES (?, ?, ?)";
+//   let values = [req.body.email, hash, salt];
+//   await db.query(insertQuery, values);
+//   return res.status(200).json({});
+// });
 
-app.put("/users/login", async (req, res) => {
-  let findUserQuery = "SELECT * FROM users WHERE users.email = ?";
-  let email = [req.body.email];
+// app.put("/users/login", async (req, res) => {
+//   let findUserQuery = "SELECT * FROM users WHERE users.email = ?";
+//   let email = [req.body.email];
 
-  let [users] = await db.query(findUserQuery, email);
+//   let [users] = await db.query(findUserQuery, email);
 
-  if (users.length == 0) {
-    return res.status(404).send("Email or password incorrect");
-  }
-  let user = users[0];
-  console.log(user);
+//   if (users.length == 0) {
+//     return res.status(404).send("Email or password incorrect");
+//   }
 
-  let hash = crypto
-    .pbkdf2Sync(req.body.password, user.salt, 1000, 64, `sha512`)
-    .toString(`hex`);
+//   let user = users[0];
+//   let hash = crypto
+//     .pbkdf2Sync(req.body.password, user.salt, 1000, 64, `sha512`)
+//     .toString(`hex`);
 
-  if (hash != user.password) {
-    return res.status(404).send("Email or password incorrect");
-  }
+//   if (hash !== user.password) {
+//     return res.status(404).send("Email or password incorrect");
+//   }
 
-  // Signed in
-  let token = crypto.randomBytes(16).toString("hex");
-  let updateQuery = "UPDATE users SET token = ? WHERE email = ?";
-  let queryParts = [token, email[0]];
-  await db.query(updateQuery, queryParts);
+//   // Signed in
+//   let token = crypto.randomBytes(16).toString("hex");
+//   let hashedToken = crypto
+//     .pbkdf2Sync(token, process.env.TOKEN_SECRET, 1000, 64, `sha512`)
+//     .toString(`hex`);
 
-  return res.status(200).json({ token });
-});
+//   let updateQuery = "UPDATE users SET token = ? WHERE email = ?";
+//   await db.query(updateQuery, [hashedToken, email[0]]);
+
+//   return res.status(200).json({ token });
+// });
+
+// app.delete("/users", authMiddleware, async (req, res) => {
+//   let updateQuery = "DELETE FROM users WHERE email = ?";
+//   await db.query(updateQuery, [req.user.email]);
+//   res.status(200).send("User deleted successfully");
+// });
 
 // // Get All Contacts
 // app.get("/contact", (req, res) => {

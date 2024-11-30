@@ -7,6 +7,7 @@ const fs = require("fs");
 const mysql = require("mysql2/promise");
 const crypto = require("crypto");
 const userRouter = require("./routers/userRouter");
+const auctionRouter = require("./routers/auctionRouter");
 
 require("dotenv").config();
 
@@ -58,6 +59,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads")); // Serve static files
 app.use("/users", userRouter);
+app.use("/auctions", auctionRouter);
 
 // Start Server
 app.listen(port, () => {

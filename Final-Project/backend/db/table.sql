@@ -1,26 +1,20 @@
--- -----------------------------------------------------
--- Schema secoms3190
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `secoms3190` DEFAULT CHARACTER SET utf8 ;
-USE `secoms3190` ;
--- -----------------------------------------------------
--- Table `secoms3190`.`contact`
--- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `secoms3190`.`contact` (
--- `id` INT AUTO_INCREMENT,
--- `contact_name` VARCHAR(255) NOT NULL,
--- `phone_number` VARCHAR(20) NOT NULL,
--- `message` TEXT,
--- `message_timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
--- `image_url` VARCHAR(255),
--- PRIMARY KEY (`id`)
--- );
-
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE  users (
   email VARCHAR(255),
   password VARCHAR(255) NOT NULL,
   salt VARCHAR(255),
-  token VARCHAR(255),
+  token VARCHAR(255 ) UNIQUE,
   PRIMARY KEY (email)
 )
 
+CREATE TABLE auctions (
+	id INT AUTO_INCREMENT,
+	title VARCHAR(255),
+    description TEXT,
+    curr_price INT,
+    days_remaining INT,
+    owner VARCHAR(255),
+    currentWinner VARCHAR(255),
+    PRIMARY KEY (id),
+    FOREIGN KEY (owner) REFERENCES users(email),
+    FOREIGN KEY (currentWinner) REFERENCES users(email)
+);

@@ -58,7 +58,38 @@ router.put("/login", async (req, res) => {
   return res.status(200).json({ token });
 });
 
+router.get("/", authMiddleware, (req, res) => {
+  return res.status(200).json(req.user);
+});
+
+router.put("/changePassword", authMiddleware, async (req, res) => {
+  if (req.body.password === undefined) {
+    return res.status(400).send("New Password is required");
+  }
+
+  let salt = crypto.randomBytes(16).toString("hex");
+  let hash = crypto
+    .pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`)
+    .toString(`hex`);
+
+  let insertQuery = "Update users SET password = ?, salt = ? WHERE email = ?";
+  let values = [hash, salt, req.user.email];
+  await db.query(insertQuery, values);
+
+  res.status(200).send("Password updated successfully");
+});
+
 router.delete("/", authMiddleware, async (req, res) => {
+  let findUserQuery =
+    "SELECT * FROM users as u JOIN auctions as a ON a.owner = u.email WHERE u.email = ?";
+  let [rows] = await db.query(findUserQuery, [req.user.email]);
+  if (rows.length != 0) {
+    return res
+      .status(400)
+      .send(
+        "Cannot delete a user who is the owner or current top bidder of an auction"
+      );
+  }
   let updateQuery = "DELETE FROM users WHERE email = ?";
   await db.query(updateQuery, [req.user.email]);
   res.status(200).send("User deleted successfully");

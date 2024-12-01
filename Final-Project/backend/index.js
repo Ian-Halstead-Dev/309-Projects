@@ -9,6 +9,8 @@ const crypto = require("crypto");
 const userRouter = require("./routers/userRouter");
 const auctionRouter = require("./routers/auctionRouter");
 
+require("./cron/auctionDaily");
+
 require("dotenv").config();
 
 // Configuration

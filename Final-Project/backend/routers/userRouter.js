@@ -79,6 +79,64 @@ router.put("/changePassword", authMiddleware, async (req, res) => {
   res.status(200).send("Password updated successfully");
 });
 
+router.get("/notifications", authMiddleware, async (req, res) => {
+  let query =
+    "SELECT * FROM users JOIN notifications on users.email = notifications.userEmail WHERE users.email = ?";
+  let param = [req.user.email];
+  let [notifications] = await db.query(query, param);
+  res.status(200).json(notifications);
+});
+
+router.get("/test", async (req, res) => {
+  let decrementQuery =
+    "UPDATE auctions SET days_remaining = days_remaining - 1";
+  await db.query(decrementQuery);
+
+  let expiredAuctionsQuery = "SELECT * FROM auctions WHERE days_remaining < 0";
+  let [rows] = await db.query(expiredAuctionsQuery);
+
+  for (row of rows) {
+    if (row.currentWinner !== null) {
+      let auctionWonNotifQuery =
+        "INSERT INTO notifications (userEmail, message, seen, timeSent) VALUES (?,?,?,?)";
+      let message =
+        "You have wont the auction for " +
+        row.title +
+        " at $" +
+        (row.curr_price / 100).toFixed(2) +
+        ". Contact " +
+        row.owner +
+        " to proceed.";
+      let params = [
+        row.currentWinner,
+        message,
+        false,
+        new Date(Date.now()).toISOString().split("T")[0],
+      ];
+      db.query(auctionWonNotifQuery, params);
+      message =
+        "The auction for " +
+        row.title +
+        " at $" +
+        (row.curr_price / 100).toFixed(2) +
+        "has finished. Contact " +
+        row.currentWinner +
+        " to proceed.";
+      params = [
+        row.owner,
+        message,
+        false,
+        new Date(Date.now()).toISOString().split("T")[0],
+      ];
+      db.query(auctionWonNotifQuery, params);
+    }
+  }
+
+  let deleteQuery = "DELETE FROM auctions WHERE days_remaining < 0";
+  await db.query(deleteQuery);
+  res.status(200).send("done");
+});
+
 router.delete("/", authMiddleware, async (req, res) => {
   let findUserQuery =
     "SELECT * FROM users as u JOIN auctions as a ON a.owner = u.email WHERE u.email = ?";

@@ -18,3 +18,13 @@ CREATE TABLE auctions (
     FOREIGN KEY (owner) REFERENCES users(email),
     FOREIGN KEY (currentWinner) REFERENCES users(email)
 );
+
+CREATE TABLE notifications (
+  userEmail VARCHAR(255) NOT NULL,
+  id INTEGER AUTO_INCREMENT,
+  message TEXT,
+  seen BOOLEAN,
+  date TIME,
+  PRIMARY KEY (id),
+  FOREIGN KEY (userEmail) REFERENCES users(email) ON DELETE CASCADE
+)

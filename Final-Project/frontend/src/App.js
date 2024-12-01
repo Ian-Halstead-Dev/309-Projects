@@ -1,23 +1,25 @@
 import logo from "./logo.svg";
 import "./Styles/App.css";
+import Login from "./Pages/Login";
+import { useState, useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    let fetchData = async () => {
+      try {
+        let data = await fetch("http://localhost:8081/auctions");
+        data = await data.json();
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Login></Login>
     </div>
   );
 }

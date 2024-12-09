@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./Styles/App.css";
 import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <Login></Login>
+      <Signup></Signup>
     </div>
   );
 }

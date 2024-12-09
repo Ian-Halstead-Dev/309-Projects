@@ -1,42 +1,43 @@
 import React, { useState } from "react";
 
-const LoginPage = () => {
+const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8081/users/login", {
-      method: "PUT",
+    const response = await fetch("http://localhost:8081/users", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
     });
 
-    console.log(response);
-
     if (response.ok) {
       const data = await response.json();
-      localStorage.setItem("token", data.token);
-      alert("Login successful!");
+      alert("Signup successful! You can now log in.");
+      setSuccess("Signup successful!");
       setError("");
-    } else if (response.status === 404) {
+    } else if (response.status === 400) {
       const errorData = await response.text();
-      console.log(errorData);
-      setError("Login failed, Please try again");
+      setError(errorData || "Signup failed. Please try again.");
+      setSuccess("");
     } else {
       setError("An error occurred. Please try again.");
+      setSuccess("");
     }
   };
 
   return (
     <div style={styles.container}>
-      <form onSubmit={handleLogin} style={styles.form}>
-        <h2>Login</h2>
+      <form onSubmit={handleSignup} style={styles.form}>
+        <h2>Signup</h2>
         {error && <p style={styles.error}>{error}</p>}
+        {success && <p style={styles.success}>{success}</p>}
         <div style={styles.field}>
           <label>Email</label>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -46,7 +47,7 @@ const LoginPage = () => {
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
         <button type="submit" style={styles.button}>
-          Login
+          Signup
         </button>
       </form>
     </div>
@@ -76,6 +77,10 @@ const styles = {
     color: "red",
     marginBottom: "10px",
   },
+  success: {
+    color: "green",
+    marginBottom: "10px",
+  },
   button: {
     width: "100%",
     padding: "10px",
@@ -87,4 +92,4 @@ const styles = {
   },
 };
 
-export default LoginPage;
+export default SignupPage;

@@ -10,6 +10,11 @@ router.post("/", async (req, res) => {
   let findUserQuery = "SELECT * FROM users WHERE users.email = ?";
   let email = [req.body.email];
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).send("Invalid email");
+  }
+
   let [users] = await db.query(findUserQuery, email);
   if (users.length !== 0) {
     return res.status(409).json({ error: "User with email already exists" });

@@ -16,12 +16,9 @@ router.post("/", async (req, res) => {
   }
 
   let salt = crypto.randomBytes(16).toString("hex");
-  let hash = crypto
-    .pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`)
-    .toString(`hex`);
+  let hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`).toString(`hex`);
 
-  let insertQuery =
-    "INSERT INTO users (email, password, salt) VALUES (?, ?, ?)";
+  let insertQuery = "INSERT INTO users (email, password, salt) VALUES (?, ?, ?)";
   let values = [req.body.email, hash, salt];
   await db.query(insertQuery, values);
 
@@ -39,18 +36,14 @@ router.put("/login", async (req, res) => {
   }
 
   let user = users[0];
-  let hash = crypto
-    .pbkdf2Sync(req.body.password, user.salt, 1000, 64, `sha512`)
-    .toString(`hex`);
+  let hash = crypto.pbkdf2Sync(req.body.password, user.salt, 1000, 64, `sha512`).toString(`hex`);
 
   if (hash !== user.password) {
     return res.status(404).send("Email or password incorrect");
   }
 
   let token = crypto.randomBytes(16).toString("hex");
-  let hashedToken = crypto
-    .pbkdf2Sync(token, process.env.TOKEN_SECRET, 1000, 64, `sha512`)
-    .toString(`hex`);
+  let hashedToken = crypto.pbkdf2Sync(token, process.env.TOKEN_SECRET, 1000, 64, `sha512`).toString(`hex`);
 
   let updateQuery = "UPDATE users SET token = ? WHERE email = ?";
   await db.query(updateQuery, [hashedToken, email[0]]);
@@ -68,9 +61,7 @@ router.put("/changePassword", authMiddleware, async (req, res) => {
   }
 
   let salt = crypto.randomBytes(16).toString("hex");
-  let hash = crypto
-    .pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`)
-    .toString(`hex`);
+  let hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`).toString(`hex`);
 
   let insertQuery = "Update users SET password = ?, salt = ? WHERE email = ?";
   let values = [hash, salt, req.user.email];
@@ -80,16 +71,15 @@ router.put("/changePassword", authMiddleware, async (req, res) => {
 });
 
 router.get("/notifications", authMiddleware, async (req, res) => {
-  let query =
-    "SELECT * FROM users JOIN notifications on users.email = notifications.userEmail WHERE users.email = ?";
+  let query = c;
+  ("SELECT * FROM users JOIN notifications on users.email = notifications.userEmail WHERE users.email = ?");
   let param = [req.user.email];
   let [notifications] = await db.query(query, param);
   res.status(200).json(notifications);
 });
 
 router.get("/test", async (req, res) => {
-  let decrementQuery =
-    "UPDATE auctions SET days_remaining = days_remaining - 1";
+  let decrementQuery = "UPDATE auctions SET days_remaining = days_remaining - 1";
   await db.query(decrementQuery);
 
   let expiredAuctionsQuery = "SELECT * FROM auctions WHERE days_remaining < 0";
@@ -97,8 +87,7 @@ router.get("/test", async (req, res) => {
 
   for (row of rows) {
     if (row.currentWinner !== null) {
-      let auctionWonNotifQuery =
-        "INSERT INTO notifications (userEmail, message, seen, timeSent) VALUES (?,?,?,?)";
+      let auctionWonNotifQuery = "INSERT INTO notifications (userEmail, message, seen, timeSent) VALUES (?,?,?,?)";
       let message =
         "You have wont the auction for " +
         row.title +
@@ -107,12 +96,7 @@ router.get("/test", async (req, res) => {
         ". Contact " +
         row.owner +
         " to proceed.";
-      let params = [
-        row.currentWinner,
-        message,
-        false,
-        new Date(Date.now()).toISOString().split("T")[0],
-      ];
+      let params = [row.currentWinner, message, false, new Date(Date.now()).toISOString().split("T")[0]];
       db.query(auctionWonNotifQuery, params);
       message =
         "The auction for " +
@@ -122,12 +106,7 @@ router.get("/test", async (req, res) => {
         "has finished. Contact " +
         row.currentWinner +
         " to proceed.";
-      params = [
-        row.owner,
-        message,
-        false,
-        new Date(Date.now()).toISOString().split("T")[0],
-      ];
+      params = [row.owner, message, false, new Date(Date.now()).toISOString().split("T")[0]];
       db.query(auctionWonNotifQuery, params);
     }
   }
@@ -138,15 +117,10 @@ router.get("/test", async (req, res) => {
 });
 
 router.delete("/", authMiddleware, async (req, res) => {
-  let findUserQuery =
-    "SELECT * FROM users as u JOIN auctions as a ON a.owner = u.email WHERE u.email = ?";
+  let findUserQuery = "SELECT * FROM users as u JOIN auctions as a ON a.owner = u.email WHERE u.email = ?";
   let [rows] = await db.query(findUserQuery, [req.user.email]);
   if (rows.length != 0) {
-    return res
-      .status(400)
-      .send(
-        "Cannot delete a user who is the owner or current top bidder of an auction"
-      );
+    return res.status(400).send("Cannot delete a user who is the owner or current top bidder of an auction");
   }
   let updateQuery = "DELETE FROM users WHERE email = ?";
   await db.query(updateQuery, [req.user.email]);

@@ -121,6 +121,12 @@ router.get("/test", async (req, res) => {
   res.status(200).send("done");
 });
 
+router.get("/auctions", authMiddleware, async (req, res) => {
+  let query = "SELECT auctions.* FROM users JOIN auctions ON users.email = auctions.owner WHERE auctions.owner = ?";
+  let [rows] = await db.query(query, [req.user.email]);
+  return res.status(200).send({ auctions: rows });
+});
+
 router.delete("/", authMiddleware, async (req, res) => {
   let findUserQuery = "SELECT * FROM users as u JOIN auctions as a ON a.owner = u.email WHERE u.email = ?";
   let [rows] = await db.query(findUserQuery, [req.user.email]);

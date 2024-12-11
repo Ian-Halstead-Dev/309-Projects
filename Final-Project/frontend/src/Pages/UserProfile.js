@@ -58,7 +58,7 @@ let UserProfile = (props) => {
   };
 
   let logout = () => {
-    props.setPage("ogin");
+    props.setPage("Login");
     localStorage.removeItem("token");
   };
 

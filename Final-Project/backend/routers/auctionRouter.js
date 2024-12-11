@@ -1,25 +1,90 @@
 const express = require("express");
 const db = require("../db/db.js");
 const authMiddleware = require("../middleware/auth");
+const multer = require("multer");
+const path = require("path");
 require("dotenv").config();
 const router = express.Router();
 
-router.post("", authMiddleware, async (req, res) => {
-  if (
-    req.body.title === undefined ||
-    req.body.description === undefined ||
-    req.body.startPrice === undefined ||
-    req.body.daysActive === undefined
-  ) {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Directory where images will be stored
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png/;
+    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimeType = fileTypes.test(file.mimetype);
+
+    if (extname && mimeType) {
+      cb(null, true);
+    } else {
+      cb(new Error("Images only!"));
+    }
+  },
+});
+
+router.post("", authMiddleware, upload.single("image"), async (req, res) => {
+  const { title, description, startPrice, daysActive, token } = req.body;
+
+  // Check required fields
+  if (!title || !description || !startPrice || !daysActive) {
     return res.status(400).send("Title, startPrice, daysActive, and description are required");
   }
-  req.body.startPrice = req.body.startPrice * 100;
 
-  let query = "INSERT INTO auctions (title, description, owner, curr_price, days_remaining ) VALUES (?, ?, ?, ?, ?)";
+  // Handle file upload
+  const fileSrc = req.file ? `/uploads/${req.file.filename}` : "/uploads/placeholder.png";
 
-  let queryParams = [req.body.title, req.body.description, req.user.email, req.body.startPrice, req.body.daysActive];
-  await db.query(query, queryParams);
-  return res.status(200).send("Product Created");
+  const query = "INSERT INTO auctions (title, description, owner, curr_price, days_remaining, fileSrc) VALUES (?, ?, ?, ?, ?, ?)";
+
+  const queryParams = [
+    title,
+    description,
+    req.user.email,
+    parseFloat(startPrice) * 100, // Convert to cents
+    daysActive,
+    fileSrc,
+  ];
+
+  try {
+    await db.query(query, queryParams);
+    return res.status(200).send("Product Created");
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Server error");
+  }
+});
+
+router.delete("/", authMiddleware, async (req, res) => {
+  console.log(req.body);
+  let findAuctionQuery = "SELECT * FROM auctions WHERE id = ?";
+  let params = [req.body.id];
+
+  let [rows] = await db.query(findAuctionQuery, params);
+
+  if (rows.length === 0) {
+    return res.status(404).send("Auction not found");
+  }
+
+  if (req.user.email != rows[0].owner) {
+    return res.status(403).send("You cannot delete this auction");
+  }
+
+  if (rows[0].currentWinner) {
+    return res.status(400).send("Cannot delete a auction with bids");
+  }
+
+  let deleteQuery = "DELETE FROM auctions WHERE id = ?";
+
+  await db.query(deleteQuery, params);
+
+  return res.status(200).send("Auction deleted successfully");
 });
 
 router.put("/bid", authMiddleware, async (req, res) => {

@@ -28,9 +28,11 @@ const LoginPage = (props) => {
     }
   };
   return (
-    <div className="flex items-center justify-center min-h-screen 
+    <div
+      className="flex items-center justify-center min-h-screen 
       bg-gradient-to-br from-blue-50 to-indigo-100 
-      px-4 py-6">
+      px-4 py-6"
+    >
       <form
         onSubmit={handleLogin}
         className="bg-white p-8 rounded-2xl shadow-2xl 
@@ -39,24 +41,30 @@ const LoginPage = (props) => {
           transform transition-all duration-300 
           hover:scale-[1.01] hover:shadow-3xl"
       >
-        <h2 className="text-3xl font-bold mb-6 text-center 
-          text-gray-800 tracking-tight">
+        <h2
+          className="text-3xl font-bold mb-6 text-center 
+          text-gray-800 tracking-tight"
+        >
           Login
         </h2>
-        
+
         {error && (
-          <div className="bg-red-50 border border-red-200 
+          <div
+            className="bg-red-50 border border-red-200 
             text-red-600 px-4 py-3 rounded-lg 
             text-center mb-4 
-            animate-pulse">
+            animate-pulse"
+          >
             {error}
           </div>
         )}
-        
+
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium 
-              text-gray-700 mb-2">
+            <label
+              className="block text-sm font-medium 
+              text-gray-700 mb-2"
+            >
               Email
             </label>
             <input
@@ -73,10 +81,12 @@ const LoginPage = (props) => {
                 placeholder-gray-400"
             />
           </div>
-          
+
           <div>
-            <label className="block text-sm font-medium 
-              text-gray-700 mb-2">
+            <label
+              className="block text-sm font-medium 
+              text-gray-700 mb-2"
+            >
               Password
             </label>
             <input
@@ -94,7 +104,7 @@ const LoginPage = (props) => {
             />
           </div>
         </div>
-        
+
         <button
           type="submit"
           className="w-full mt-6 bg-blue-600 text-white 
@@ -108,6 +118,17 @@ const LoginPage = (props) => {
           Login
         </button>
       </form>
+      <p>
+        Don't have an account?{" "}
+        <span
+          onClick={() => {
+            props.setPage("Signup");
+          }}
+          styles={{ color: "skyblue" }}
+        >
+          Sign Up Here
+        </span>
+      </p>
     </div>
   );
 };

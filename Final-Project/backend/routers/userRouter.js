@@ -150,6 +150,15 @@ router.get("/myBids/:token", authMiddleware, async (req, res) => {
   return res.status(200).send({ auctions: rows });
 });
 
+router.delete("/notification", authMiddleware, async (req, res) => {
+  console.log("DELETE");
+  let query = "DELETE FROM notifications WHERE userEmail = ? AND id = ?";
+  let params = [req.user.email, req.body.id];
+  await db.query(query, params);
+
+  res.status(200).send("Delete Successfully");
+});
+
 router.delete("/", authMiddleware, async (req, res) => {
   let findUserQuery = "SELECT * FROM users as u JOIN auctions as a ON a.owner = u.email WHERE u.email = ?";
   let [rows] = await db.query(findUserQuery, [req.user.email]);

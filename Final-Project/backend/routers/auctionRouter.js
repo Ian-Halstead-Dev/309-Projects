@@ -30,9 +30,10 @@ const upload = multer({
   },
 });
 
-router.post("", authMiddleware, upload.single("image"), async (req, res) => {
-  const { title, description, startPrice, daysActive, token } = req.body;
+router.post("/:token", authMiddleware, upload.single("image"), async (req, res) => {
+  const { title, description, startPrice, daysActive } = req.body;
 
+  console.log(req.body);
   // Check required fields
   if (!title || !description || !startPrice || !daysActive) {
     return res.status(400).send("Title, startPrice, daysActive, and description are required");

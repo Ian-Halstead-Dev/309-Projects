@@ -179,6 +179,7 @@ let UserHome = (props) => {
         </section>
         <button onClick={() => props.setPage("Products")}>Products</button>
         <button onClick={() => props.setPage("CreateProduct")}>Create Product</button>
+        <button onClick={() => props.setPage("UserProfile")}>Profile</button>
       </div>
     </div>
   );

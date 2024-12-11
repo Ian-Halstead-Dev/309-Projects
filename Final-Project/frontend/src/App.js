@@ -6,22 +6,30 @@ import UserHome from "./Pages/userHome";
 import { useState, useEffect } from "react";
 
 function App() {
-  useEffect(() => {
-    let fetchData = async () => {
-      try {
-        let data = await fetch("http://localhost:8081/auctions");
-        data = await data.json();
-        console.log(data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
+  const [currentPage, setPage] = useState(null);
 
-    fetchData();
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setPage("UserHome");
+    } else {
+      setPage("Login");
+    }
   }, []);
+
   return (
     <div className="App">
-      <UserHome></UserHome>
+      {(() => {
+        switch (currentPage) {
+          case "UserHome":
+            return <UserHome setPage={setPage} />;
+          case "Login":
+            return <Login setPage={setPage} />;
+          case "Signup":
+            return <Signup setPage={setPage} />;
+          default:
+            return <div>Loading...</div>; // Optional loading state
+        }
+      })()}
     </div>
   );
 }

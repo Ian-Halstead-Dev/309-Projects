@@ -2,22 +2,21 @@ import { useState, useEffect } from "react";
 
 import AuctionCard from "../Components/AuctionCard";
 
-let UserHome = () => {
+let UserHome = (props) => {
   let [currentBids, setCurrentBids] = useState([]);
   let [outBid, setOutBid] = useState([]);
   let [myAuctions, setMyAuctions] = useState([]);
   useEffect(() => {
     if (localStorage.getItem("token") == undefined) {
-      alert("Not logged in!");
-      // TODO CHANGE PAGE
+      return props.setPage("Login");
     }
 
     let getData = async () => {
       const response = await fetch("http://localhost:8081/users/" + localStorage.getItem("token"));
 
       if (response.status === 404) {
-        alert("Not logged in!");
-        // TODO CHANGE PAGE
+        console.log("ERRORORRO");
+        return props.setPage("Login");
       }
 
       let myProductsResponse = await fetch("http://localhost:8081/users/auctions/" + localStorage.getItem("token"));

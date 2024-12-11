@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,16 +16,12 @@ const LoginPage = () => {
       body: JSON.stringify({ email, password }),
     });
 
-    console.log(response);
-
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      alert("Login successful!");
+      props.setPage("UserHome");
       setError("");
     } else if (response.status === 404) {
-      const errorData = await response.text();
-      console.log(errorData);
       setError("Login failed, Please try again");
     } else {
       setError("An error occurred. Please try again.");

@@ -5,6 +5,7 @@ import Signup from "./Pages/Signup";
 import UserHome from "./Pages/userHome";
 import Products from "./Pages/Products";
 import Product from "./Pages/Product";
+import CreateProduct from "./Pages/CreateProduct";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -24,7 +25,6 @@ function App() {
         if (!currentPage) {
           return <Login setPage={setPage} />;
         }
-        console.log(currentPage);
         let currentPageProcessed = currentPage.split("/")[0];
         switch (currentPageProcessed) {
           case "UserHome":
@@ -37,6 +37,8 @@ function App() {
             return <Products setPage={setPage} />;
           case "Product":
             return <Product setPage={setPage} auctionId={currentPage.split("/")[1]}></Product>;
+          case "CreateProduct":
+            return <CreateProduct setPage={setPage}></CreateProduct>;
           default:
             return <div>Loading...</div>; // Optional loading state
         }

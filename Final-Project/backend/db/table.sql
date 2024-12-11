@@ -8,6 +8,7 @@ CREATE TABLE  users (
 
 CREATE TABLE auctions (
 	id INT AUTO_INCREMENT,
+  fileSrc TEXT,
 	title VARCHAR(255),
     description TEXT,
     curr_price INT,

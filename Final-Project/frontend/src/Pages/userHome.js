@@ -84,6 +84,7 @@ let UserHome = (props) => {
                   key={auction.id}
                   auction={auction}
                   setPage={props.setPage}
+                  isOwner={true}
                   className="transition-all duration-300 
                     hover:scale-105 hover:shadow-2xl"
                 >
@@ -121,6 +122,7 @@ let UserHome = (props) => {
                 <AuctionCard
                   key={auction.id}
                   auction={auction}
+                  setPage={props.setPage}
                   className="transition-all duration-300 
                     hover:scale-105 hover:shadow-2xl"
                 >
@@ -158,6 +160,7 @@ let UserHome = (props) => {
                 <AuctionCard
                   key={auction.id}
                   auction={auction}
+                  setPage={props.setPage}
                   className="transition-all duration-300 
                     hover:scale-105 hover:shadow-2xl"
                 >
@@ -175,6 +178,7 @@ let UserHome = (props) => {
           </div>
         </section>
         <button onClick={() => props.setPage("Products")}>Products</button>
+        <button onClick={() => props.setPage("CreateProduct")}>Create Product</button>
       </div>
     </div>
   );

@@ -1,6 +1,28 @@
-import React from "react";
+import { useState } from "react";
 
-const AuctionCard = ({ auction, setPage }) => {
+const AuctionCard = ({ auction, setPage, isOwner }) => {
+  let [errorText, setErrorText] = useState("");
+  const deleteAuction = async () => {
+    let response = await fetch("http://localhost:8081/auctions", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: localStorage.getItem("token"), id: auction.id }),
+    });
+
+    if (!response.ok) {
+      let message = await response.text();
+      if (message) {
+        setErrorText(message);
+      } else {
+        setErrorText("An unexpected error occurred. Please try again");
+      }
+    } else {
+      window.location.reload();
+    }
+  };
+
   // Destructure auction object with default values to prevent undefined errors
   const { title = "Auction Title", curr_price = 0, description = "Description goes here", imageUrl = null } = auction || {};
 
@@ -78,6 +100,9 @@ const AuctionCard = ({ auction, setPage }) => {
             <span className="transition-transform group-active/button:-translate-y-0.5">View Details</span>
           </button>
         </div>
+
+        {isOwner && <button onClick={deleteAuction}>Delete</button>}
+        {errorText && <p>{errorText}</p>}
       </div>
     </div>
   );

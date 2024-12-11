@@ -6,6 +6,7 @@ let CreateProduct = (props) => {
   let [startPrice, setStartPrice] = useState("");
   let [daysActive, setDaysActive] = useState("");
   let [errorText, setErrorText] = useState("");
+
   let [image, setImage] = useState("");
 
   const handleSubmit = async (e) => {
@@ -26,6 +27,7 @@ let CreateProduct = (props) => {
         method: "POST",
         Authorization: `Bearer ${token}`,
         body: formData, // Send FormData directly
+
       });
 
       if (response.ok) {
@@ -61,10 +63,12 @@ let CreateProduct = (props) => {
           <label>Days Active:</label>
           <input type="number" value={daysActive} onChange={(e) => setDaysActive(e.target.value)} required />
         </div>
+
         <div>
           <label>Image:</label>
           <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
         </div>
+
         <button type="submit">Create Auction</button>
         <button
           onClick={() => {

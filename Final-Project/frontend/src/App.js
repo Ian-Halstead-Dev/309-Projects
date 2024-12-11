@@ -7,6 +7,7 @@ import Products from "./Pages/Products";
 import Product from "./Pages/Product";
 import CreateProduct from "./Pages/CreateProduct";
 import UserProfile from "./Pages/UserProfile";
+
 import { useState, useEffect } from "react";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
             return <CreateProduct setPage={setPage}></CreateProduct>;
           case "UserProfile":
             return <UserProfile setPage={setPage}></UserProfile>;
+
           default:
             return <div>Loading...</div>; // Optional loading state
         }

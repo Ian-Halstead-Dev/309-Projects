@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 const AuctionCard = ({ auction, setPage, isOwner }) => {
   let [errorText, setErrorText] = useState("");
   const deleteAuction = async () => {
@@ -27,6 +28,7 @@ const AuctionCard = ({ auction, setPage, isOwner }) => {
 
   // Ensure image URL is correctly formatted with backend URL
   const imageSrc = fileSrc ? `http://localhost:8081${fileSrc}` : null;
+
 
   return (
     <div className="max-w-xs transform transition-all duration-300 hover:-translate-y-1 m-4 group">

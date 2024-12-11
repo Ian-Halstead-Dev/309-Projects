@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AuctionCard from "../Components/AuctionCard";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -50,6 +51,8 @@ const SignupPage = () => {
           Signup
         </button>
       </form>
+
+      <AuctionCard></AuctionCard>
     </div>
   );
 };

@@ -1,14 +1,17 @@
 const crypto = require("crypto");
 const db = require("../db/db.js");
 let authMiddleware = async (req, res, next) => {
-  const { token } = req.body;
+  let token = req.body.token;
   if (!token) {
-    return res.status(401).json({ error: "Token is required" });
+    token = req.params.token;
+    if (!token) {
+      return res.status(401).json({ error: "Token is required" });
+    }
   }
 
-  let hashedToken = crypto
-    .pbkdf2Sync(token, process.env.TOKEN_SECRET, 1000, 64, `sha512`)
-    .toString(`hex`); // Hash the received token
+  console.log({ token });
+
+  let hashedToken = crypto.pbkdf2Sync(token, process.env.TOKEN_SECRET, 1000, 64, `sha512`).toString(`hex`); // Hash the received token
 
   let query = "SELECT * FROM users WHERE token = ?";
   let [user] = await db.query(query, [hashedToken]);

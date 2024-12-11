@@ -41,8 +41,15 @@ router.put("/bid", authMiddleware, async (req, res) => {
     return res.status(400).send("bidAmount must be greater than the current price: $" + (auction.curr_price / 100).toFixed(2));
   }
 
+  if (auction.currentWinner != null) {
+    let notifQuery = "INSERT INTO notifications (userEmail, message, seen, timeSent) VALUES (?,?,?,?)";
+    let params = [auction.currentWinner, "OUTBID " + req.body.bidId, false, new Date(Date.now()).toISOString().split("T")[0]];
+    await db.query(notifQuery, params);
+  }
+
   let updateQuery = "UPDATE auctions SET curr_price = ?, currentWinner = ? WHERE id = ?";
   let updateParams = [bidAmount, req.user.email, req.body.bidId];
+
   await db.query(updateQuery, updateParams);
   res.status(200).send("Updated auction");
 });

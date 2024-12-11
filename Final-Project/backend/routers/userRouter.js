@@ -56,7 +56,7 @@ router.put("/login", async (req, res) => {
   return res.status(200).json({ token });
 });
 
-router.get("/", authMiddleware, (req, res) => {
+router.get("/:token", authMiddleware, (req, res) => {
   return res.status(200).json(req.user);
 });
 
@@ -75,12 +75,29 @@ router.put("/changePassword", authMiddleware, async (req, res) => {
   res.status(200).send("Password updated successfully");
 });
 
-router.get("/notifications", authMiddleware, async (req, res) => {
-  let query = c;
-  ("SELECT * FROM users JOIN notifications on users.email = notifications.userEmail WHERE users.email = ?");
+router.get("/notifications/:token", authMiddleware, async (req, res) => {
+  let query =
+    "SELECT * FROM users JOIN notifications on users.email = notifications.userEmail WHERE users.email = ? AND notifications.message NOT LIKE 'OUTBID%'";
   let param = [req.user.email];
   let [notifications] = await db.query(query, param);
   res.status(200).json(notifications);
+});
+
+router.get("/outbid/:token", authMiddleware, async (req, res) => {
+  let query =
+    "SELECT * FROM users JOIN notifications on users.email = notifications.userEmail WHERE users.email = ? AND notifications.message LIKE 'OUTBID%'";
+
+  let param = [req.user.email];
+  let [rows] = await db.query(query, param);
+
+  let ids = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    console.log(rows[i]);
+    ids.push(parseInt(rows[i].message.split(" ")[1]));
+  }
+
+  res.status(200).json(ids);
 });
 
 router.get("/test", async (req, res) => {
@@ -121,8 +138,14 @@ router.get("/test", async (req, res) => {
   res.status(200).send("done");
 });
 
-router.get("/auctions", authMiddleware, async (req, res) => {
+router.get("/auctions/:token", authMiddleware, async (req, res) => {
   let query = "SELECT auctions.* FROM users JOIN auctions ON users.email = auctions.owner WHERE auctions.owner = ?";
+  let [rows] = await db.query(query, [req.user.email]);
+  return res.status(200).send({ auctions: rows });
+});
+
+router.get("/myBids/:token", authMiddleware, async (req, res) => {
+  let query = "SELECT auctions.* FROM users JOIN auctions ON users.email = auctions.owner WHERE auctions.currentWinner = ?";
   let [rows] = await db.query(query, [req.user.email]);
   return res.status(200).send({ auctions: rows });
 });

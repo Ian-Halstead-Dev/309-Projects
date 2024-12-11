@@ -70,7 +70,9 @@ router.put("/changePassword", authMiddleware, async (req, res) => {
 
   let insertQuery = "Update users SET password = ?, salt = ? WHERE email = ?";
   let values = [hash, salt, req.user.email];
-  await db.query(insertQuery, values);
+  let data = await db.query(insertQuery, values);
+
+  console.log(data);
 
   res.status(200).send("Password updated successfully");
 });

@@ -24,6 +24,8 @@ let UserProfile = (props) => {
         body: JSON.stringify({ token: localStorage.getItem("token"), password: newPassword }),
       });
 
+      console.log(newPassword);
+
       if (response.ok) {
         alert("Password Changed!");
         props.setPage("UserHome");

@@ -47,38 +47,107 @@ let UserHome = (props) => {
   }, []);
 
   return (
-    <div>
-      <p>Your Auctions</p>
-      {myAuctions.map((auction) => {
-        console.log(auction);
-        return (
-          <AuctionCard setPage={props.setPage} auction={auction}>
-            {auction.title}
-          </AuctionCard>
-        );
-      })}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 
+      py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-10">
+        {/* Header Section */}
+        <header className="text-center mb-10">
+          <h1 className="text-4xl font-extrabold text-gray-900 
+            tracking-tight sm:text-5xl lg:text-6xl">
+            Your Auction Dashboard
+          </h1>
+          <p className="mt-4 text-xl text-gray-600">
+            Track your auction activities and bidding status
+          </p>
+        </header>
 
-      <p>Your Winning Bids</p>
-      {currentBids.map((auction) => {
-        console.log(auction);
-        return (
-          <AuctionCard setPage={props.setPage} auction={auction}>
-            {auction.title}
-          </AuctionCard>
-        );
-      })}
+        {/* Your Auctions Section */}
+        <section className="bg-white shadow-lg rounded-2xl p-6 
+          transform transition-all hover:shadow-xl">
+          <h2 className="text-2xl font-bold text-gray-800 
+            mb-6 border-b pb-3 border-gray-200">
+            Your Auctions
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 
+            gap-6 animate-fade-in">
+            {myAuctions.length > 0 ? (
+              myAuctions.map((auction) => (
+                <AuctionCard 
+                  key={auction.id} 
+                  auction={auction} 
+                  className="transition-all duration-300 
+                    hover:scale-105 hover:shadow-2xl"
+                >
+                  {auction.title}
+                </AuctionCard>
+              ))
+            ) : (
+              <div className="col-span-full text-center 
+                text-gray-500 italic py-10">
+                No auctions created yet. Start selling!
+              </div>
+            )}
+          </div>
+        </section>
 
-      <p>You were outbid on the following products</p>
-      {outBid.map((auction) => {
-        console.log(auction);
-        return (
-          <AuctionCard setPage={props.setPage} auction={auction}>
-            {auction.title}
-          </AuctionCard>
-        );
-      })}
+        {/* Your Winning Bids Section */}
+        <section className="bg-white shadow-lg rounded-2xl p-6 
+          transform transition-all hover:shadow-xl">
+          <h2 className="text-2xl font-bold text-gray-800 
+            mb-6 border-b pb-3 border-gray-200">
+            Your Winning Bids
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 
+            gap-6 animate-fade-in">
+            {currentBids.length > 0 ? (
+              currentBids.map((auction) => (
+                <AuctionCard 
+                  key={auction.id} 
+                  auction={auction}
+                  className="transition-all duration-300 
+                    hover:scale-105 hover:shadow-2xl"
+                >
+                  {auction.title}
+                </AuctionCard>
+              ))
+            ) : (
+              <div className="col-span-full text-center 
+                text-gray-500 italic py-10">
+                You haven't won any bids yet. Keep bidding!
+              </div>
+            )}
+          </div>
+        </section>
 
-      <div onClick={() => props.setPage("Products")}>Products</div>
+        {/* Outbid Auctions Section */}
+        <section className="bg-white shadow-lg rounded-2xl p-6 
+          transform transition-all hover:shadow-xl">
+          <h2 className="text-2xl font-bold text-gray-800 
+            mb-6 border-b pb-3 border-gray-200">
+            You Were Outbid
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 
+            gap-6 animate-fade-in">
+            {outBid.length > 0 ? (
+              outBid.map((auction) => (
+                <AuctionCard 
+                  key={auction.id} 
+                  auction={auction}
+                  className="transition-all duration-300 
+                    hover:scale-105 hover:shadow-2xl"
+                >
+                  {auction.title}
+                </AuctionCard>
+              ))
+            ) : (
+              <div className="col-span-full text-center 
+                text-gray-500 italic py-10">
+                You haven't been outbid on any items. Great job!
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AuctionCard from "../Components/AuctionCard";
 
-const SignupPage = () => {
+const SignupPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -51,8 +51,17 @@ const SignupPage = () => {
           Signup
         </button>
       </form>
-
-      <AuctionCard></AuctionCard>
+      <p>
+        Already have an account?
+        <span
+          onClick={() => {
+            props.setPage("Login");
+          }}
+          styles={{ color: "skyblue" }}
+        >
+          Log In Instead
+        </span>
+      </p>
     </div>
   );
 };

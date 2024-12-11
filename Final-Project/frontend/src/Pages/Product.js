@@ -62,7 +62,7 @@ let Product = (props) => {
       <button onClick={placeBid}> Place Bid</button>
       {errorText && <p>{errorText}</p>}
       <br />
-      <button>Return Home</button>
+      <button onClick={() => props.setPage("UserHome")}>Return Home</button>
     </div>
   );
 };

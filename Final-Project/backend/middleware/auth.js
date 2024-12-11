@@ -9,8 +9,6 @@ let authMiddleware = async (req, res, next) => {
     }
   }
 
-  console.log({ token });
-
   let hashedToken = crypto.pbkdf2Sync(token, process.env.TOKEN_SECRET, 1000, 64, `sha512`).toString(`hex`); // Hash the received token
 
   let query = "SELECT * FROM users WHERE token = ?";

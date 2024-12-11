@@ -6,7 +6,13 @@ const AuctionCard = (props) => {
       <div style={styles.image}></div>
       <div style={styles.title}>{props.auction.title}</div>
       <div style={styles.price}>${(props.auction.curr_price / 100).toFixed(2)}</div>
-      <div style={styles.description}>{props.auction.description}</div>
+      <button
+        onClick={() => {
+          props.setPage("Product/" + props.auction.id);
+        }}
+      >
+        View
+      </button>
     </div>
   );
 };

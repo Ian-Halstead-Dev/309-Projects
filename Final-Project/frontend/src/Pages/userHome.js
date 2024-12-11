@@ -51,20 +51,34 @@ let UserHome = (props) => {
       <p>Your Auctions</p>
       {myAuctions.map((auction) => {
         console.log(auction);
-        return <AuctionCard auction={auction}>{auction.title}</AuctionCard>;
+        return (
+          <AuctionCard setPage={props.setPage} auction={auction}>
+            {auction.title}
+          </AuctionCard>
+        );
       })}
 
       <p>Your Winning Bids</p>
       {currentBids.map((auction) => {
         console.log(auction);
-        return <AuctionCard auction={auction}>{auction.title}</AuctionCard>;
+        return (
+          <AuctionCard setPage={props.setPage} auction={auction}>
+            {auction.title}
+          </AuctionCard>
+        );
       })}
 
       <p>You were outbid on the following products</p>
       {outBid.map((auction) => {
         console.log(auction);
-        return <AuctionCard auction={auction}>{auction.title}</AuctionCard>;
+        return (
+          <AuctionCard setPage={props.setPage} auction={auction}>
+            {auction.title}
+          </AuctionCard>
+        );
       })}
+
+      <div onClick={() => props.setPage("Products")}>Products</div>
     </div>
   );
 };

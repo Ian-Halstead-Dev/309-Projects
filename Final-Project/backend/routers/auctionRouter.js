@@ -23,6 +23,7 @@ router.post("", authMiddleware, async (req, res) => {
 });
 
 router.put("/bid", authMiddleware, async (req, res) => {
+  console.log(req.body);
   if (req.body.bidId === undefined || req.body.bidAmount === undefined) {
     return res.status(400).send("Request must include bidId and bidAmount");
   }
@@ -51,6 +52,12 @@ router.put("/bid", authMiddleware, async (req, res) => {
   let updateParams = [bidAmount, req.user.email, req.body.bidId];
 
   await db.query(updateQuery, updateParams);
+
+  let deleteNotifQuery = "DELETE FROM notifications WHERE message LIKE CONCAT('OUTBID %', ?, '%') AND userEmail = ?";
+  console.log({ auctionId: auction.id, userEmail: req.user.email });
+  let deleteParams = [auction.id, req.user.email];
+  await db.query(deleteNotifQuery, deleteParams);
+
   res.status(200).send("Updated auction");
 });
 
